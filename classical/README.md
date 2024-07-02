@@ -60,30 +60,30 @@ javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/PlanningHeuristic.java sr
 
 (per ist1)
 
-** RICERCA **
+**RICERCA**
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.5 10 pddl/domain.pddl pddl/ist1.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
-** RICERCA QUALITATIVA **
+**RICERCA QUALITATIVA**
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.2 10 pddl/domain.pddl pddl/ist1.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
 
 (per ist2)
 
-** RICERCA **
+**RICERCA**
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
-** RICERCA QUALITATIVA **
+**RICERCA QUALITATIVA**
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl/domain.pddl pddl/ist2.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
 
 (per ist3)
 
-** RICERCA **
+**RICERCA**
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.5 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
-** RICERCA QUALITATIVA **
+**RICERCA QUALITATIVA**
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl/domain.pddl pddl/ist2.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
