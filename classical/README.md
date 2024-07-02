@@ -14,11 +14,11 @@ wget http://pddl4j.imag.fr/repository/pddl4j/binaries/pddl4j-4.0.0.jar
 mv pddl4j-4.0.0.jar lib/pddl4j-4.0.0.jar
 
 
-Aprire un terminale nella cartella in cui è contenuto questo file.
+Aprire un terminale nella cartella classical.
 
 PER COMPILARE:
 
-javac -d classes -cp lib\pddl4j-4.0.0.jar src\planning\PlanningHeuristic.java src\planning\MyASP.java
+javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/PlanningHeuristic.java src/planning/MyASP.java
 
 PER ESEGUIRE:
 
@@ -56,34 +56,34 @@ Esempio di comandi:
 
 (per compilare)
 
-javac -d classes -cp lib\pddl4j-4.0.0.jar src\planning\PlanningHeuristic.java src\planning\MyASP.java 
+javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/PlanningHeuristic.java src/planning/MyASP.java
 
 (per ist1)
 
 ** RICERCA **
 
-java -cp classes;lib\pddl4j-4.0.0.jar planning.MyASP 1.5 10 pddl\domain.pddl pddl\ist1.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.5 10 pddl/domain.pddl pddl/ist1.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
 ** RICERCA QUALITATIVA **
 
-java -cp classes;lib\pddl4j-4.0.0.jar planning.MyASP 1.2 10 pddl\domain.pddl pddl\ist1.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.2 10 pddl/domain.pddl pddl/ist1.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
 
 (per ist2)
 
 ** RICERCA **
 
-java -cp classes;lib\pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl\domain.pddl pddl\ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
 ** RICERCA QUALITATIVA **
 
-java -cp classes;lib\pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl\domain.pddl pddl\ist2.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl/domain.pddl pddl/ist2.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
 
 (per ist3)
 
 ** RICERCA **
 
-java -cp classes;lib\pddl4j-4.0.0.jar planning.MyASP 1.5 10 pddl\domain.pddl pddl\ist3.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.5 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
 ** RICERCA QUALITATIVA **
 
-java -cp classes;lib\pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl\domain.pddl pddl\ist3.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.MyASP 1.3 10 pddl/domain.pddl pddl/ist2.pddl PARALLEL_ANYTIME_ASTAR PLANNING_HEURISTIC
