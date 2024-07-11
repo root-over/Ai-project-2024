@@ -11,7 +11,6 @@
     ; locatable - oggetto allocabile
     location locatable - object
     box agent workstation content - locatable
-    bolt tool valve - content
   )
   (:predicates
       (at ?x - locatable ?v - location) ; un locatable genrico si trova in una location
@@ -20,6 +19,7 @@
       (served ?ws - workstation ?ct - content) ; la workstation è stata servita
       (carrying ?a - agent ?b - box) ; l'agente ha caricato il pacco
       (connected ?l1 ?l2 - location) ; le due locazioni sono connesse
+      (with-box ?a - agent); l'agent ha delle scatole
   )
 
   (:action move
@@ -33,31 +33,20 @@
       (at ?a ?l2) ; l'agente si trova in l2
     )
   )
-  (:action move-with-box
-    :parameters (?a - agent ?b - box ?l1 ?l2 - location) ; servono un agente, una scatola e due locazioni
-    :precondition (and
-      (at ?a ?l1) ; l'agente si trova in l1?
-      (at ?b ?l1) ; la scatola si trova in l1?
-      (carrying ?a ?b) ; l'agente ha caricato la scatola?
-      (connected ?l1 ?l2) ; l1 e l2 sono connessi?
-    )
-    :effect (and
-      (not (at ?a ?l1)) ; l'agente non si trova più in l1
-      (at ?a ?l2) ; l'agente si trova in l2
-      (not (at ?b ?l1)); la scatola non si trova più in l1
-      (at ?b ?l2) ; la scatola si trova in l2
-    )
-  )
+
   (:action pick-up
     :parameters (?a - agent ?b - box ?l - location)
     :precondition (and
       (at ?a ?l)
       (at ?b ?l)
       (not (carrying ?a ?b))
+      (not (empty-box ?b))
+      (not(with-box ?a))
     )
     :effect (and
       (carrying ?a ?b)
       (not (at ?b ?l))
+      (with-box ?a)
     )
   )
   (:action drop
@@ -69,6 +58,7 @@
     :effect (and
       (not (carrying ?a ?b))
       (at ?b ?l)
+      (not(with-box ?a))
     )
   )
 
@@ -87,7 +77,7 @@
       )
     )
 
-    (:action empty-box
+    (:action empty
       :parameters (?a - agent ?b - box ?c - content ?ws - workstation ?l - location)
       :precondition (and
         (at ?a ?l)
