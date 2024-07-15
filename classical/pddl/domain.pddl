@@ -1,94 +1,125 @@
 (define (domain dominio)
-
-  (:requirements :strips :typing :universal-preconditions :existential-preconditions :negative-preconditions :disjunctive-preconditions)
-
+  (:requirements :typing :existential-preconditions :negative-preconditions :disjunctive-preconditions )
   (:types
-    ; box - scatola
-    ; agent - agente robotico
-    ; content - contenuto (bolt, tool, valve)
-    ; workstation - stazione di lavoro
-    ; location - locazione
-    ; locatable - oggetto allocabile
-    location locatable - object
-    box agent workstation content - locatable
+        location locatable - object
+        box agent carrier workstation content - locatable
+        quantity - object
   )
+
   (:predicates
-      (at ?x - locatable ?v - location) ; un locatable genrico si trova in una location
-      (in-box ?b - box ?ct - content) ; un contenuto generico si trova in una scatola
-      (empty-box ?b - box) ; svuota la scatola
-      (served ?ws - workstation ?ct - content) ; la workstation è stata servita
-      (carrying ?a - agent ?b - box) ; l'agente ha caricato il pacco
-      (connected ?l1 ?l2 - location) ; le due locazioni sono connesse
-      (with-box ?a - agent); l'agent ha delle scatole
+     (box-vuota ?b - box)
+     (capacita ?ca - carrier ?q - quantity)
+     (pos ?lb - locatable ?lc - location)
+     (nella-scatola ?b - box ?ct - content)
+     (servito ?ws - workstation ?ct - content)
+     (sul-carrello ?b - box ?ca - carrier)
+     (carrello-vuoto ?ca - carrier)
+     (precedente ?q1 ?q2 - quantity)
   )
 
-  (:action move
-    :parameters (?a - agent ?l1 ?l2 - location) ; servono due locazioni e un agente
+  (:action prendi
+    :parameters (?a - agent  ?l - location ?c - carrier ?b - box ?q1 ?q2 - quantity)
     :precondition (and
-      (at ?a ?l1) ; l'agente si trova alla locazione l1?
-      (connected ?l1 ?l2) ; l1 e l2 sono connessi?
-    )
+        (pos ?c ?l)
+        (pos ?a ?l)
+        (pos ?b ?l)
+        (capacita ?c ?q2)
+        (precedente ?q1 ?q2)
+      )
     :effect (and
-      (not (at ?a ?l1)) ; l'agente non è più ad l1
-      (at ?a ?l2) ; l'agente si trova in l2
+        (not (pos ?b ?l))
+        (capacita ?c ?q1)
+        (sul-carrello ?b ?c)
+        (not (capacita ?c ?q2))
+        (not (carrello-vuoto ?c))
+      )
+  )
+
+  (:action riempi
+    :parameters (?a - agent ?l - location  ?c - content ?b - box)
+    :precondition (and
+         (pos ?a ?l)
+         (pos ?c ?l)
+         (box-vuota ?b)
+         (or (exists (?car - carrier)
+           (and
+             (pos ?car ?l)
+             (sul-carrello ?b ?car)
+             )
+           )
+           (pos ?b ?l)
+        )
+      )
+    :effect (and
+      (not (box-vuota ?b))
+      (nella-scatola ?b ?c)
     )
   )
 
-  (:action pick-up
-    :parameters (?a - agent ?b - box ?l - location)
+  (:action muovi
+    :parameters (?a - agent ?l1 ?l2 - location ?c - carrier)
     :precondition (and
-      (at ?a ?l)
-      (at ?b ?l)
-      (not (carrying ?a ?b))
-      (not (empty-box ?b))
-      (not(with-box ?a))
-    )
+        (pos ?c ?l1)
+        (pos ?a ?l1)
+        (not (carrello-vuoto ?c))
+      )
     :effect (and
-      (carrying ?a ?b)
-      (not (at ?b ?l))
-      (with-box ?a)
-    )
-  )
-  (:action drop
-    :parameters (?a - agent ?b - box ?l - location)
-    :precondition (and
-      (at ?a ?l)
-      (carrying ?a ?b)
-    )
-    :effect (and
-      (not (carrying ?a ?b))
-      (at ?b ?l)
-      (not(with-box ?a))
-    )
+        (not (pos ?c ?l1))
+        (not (pos ?a ?l1))
+        (pos ?c ?l2)
+        (pos ?a ?l2)
+      )
   )
 
-    (:action fill-box
-      :parameters (?a - agent ?b - box ?c - content ?l - location)
+  (:action muovi-agente
+      :parameters (?a - agent ?l1 ?l2 - location)
       :precondition (and
-        (at ?a ?l)
-        (at ?b ?l)
-        (empty-box ?b)
-        (at ?c ?l) ; Assicura che il contenuto sia presente
-      )
+          (pos ?a ?l1)
+        )
       :effect (and
-        (in-box ?b ?c)
-        (not (empty-box ?b))
-        ; Rimuovere il contenuto dalla locazione se è specificato in predicati
-      )
+          (not (pos ?a ?l1))
+          (pos ?a ?l2)
+        )
     )
 
-    (:action empty
-      :parameters (?a - agent ?b - box ?c - content ?ws - workstation ?l - location)
-      :precondition (and
-        (at ?a ?l)
-        (at ?b ?l)
-        (at ?ws ?l)
-        (in-box ?b ?c)
+  (:action togli
+    :parameters (?a - agent ?l - location ?c - carrier  ?b - box  ?q1 ?q2 - quantity)
+    :precondition (and
+        (pos ?c ?l)
+        (pos ?a ?l)
+        (capacita ?c ?q1)
+        (sul-carrello ?b ?c)
+        (precedente ?q1 ?q2)
       )
-      :effect (and
-        (served ?ws ?c)
-        (empty-box ?b)
-        (not (in-box ?b ?c))
+    :effect (and
+        (pos ?b ?l)
+        (capacita ?c ?q2)
+        (not (capacita ?c ?q1))
+        (not (sul-carrello ?b ?c))
+      )
+  )
+
+
+  (:action svuota
+    :parameters (?a - agent ?l - location ?c - content ?b - box ?ws - workstation)
+    :precondition (and
+      (pos ?a ?l)
+      (pos ?ws ?l)
+      (not (box-vuota ?b))
+      (nella-scatola ?b ?c)
+      (or (exists (?car - carrier)
+      (and
+        (pos ?car ?l)
+        (sul-carrello ?b ?car)
+      )
+     )
+     (pos ?b ?l)
       )
     )
+    :effect (and
+      (box-vuota ?b)
+      (servito ?ws ?c)
+      (not (nella-scatola ?b ?c))
+       )
+  )
 )
