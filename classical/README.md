@@ -1,5 +1,5 @@
 1. Preparazione dell'Ambiente
-2. 
+   
 Scarica la libreria pddl4j e spostala nella cartella lib:
 
 wget http://pddl4j.imag.fr/repository/pddl4j/binaries/pddl4j-4.0.0.jar
