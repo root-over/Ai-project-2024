@@ -44,12 +44,11 @@ javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/HeuristicEvaluation.java 
 
 Per eseguire (esempio per istanza 1):
 
-java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.5 10 pddl/domain.pddl pddl/ist1.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
-
+java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.5 10 pddl/domain.pddl pddl/ist1.pddl WEIGHTED_ASTAR heuristicEvaluation
 Altri esempi di esecuzione:
 
-java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.3 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.3 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR heuristicEvaluation
 
-java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.5 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
+java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.5 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR heuristicEvaluation
 
 Segui questi passaggi per configurare correttamente l'ambiente e utilizzare il software in modo efficiente.
