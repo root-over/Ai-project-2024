@@ -1,64 +1,57 @@
-Per prima cosa, se non è già presente nella cartella lib, è necessario scaricare la libreria di pddl4j e spostarla nella cartella lib:
-
-(WINDOWS)
- 
-curl -o pddl4j-4.0.0.jar http://pddl4j.imag.fr/repository/pddl4j/binaries/pddl4j-4.0.0.jar
-
-move pddl4j-4.0.0.jar lib\pddl4j-4.0.0.jar
-
-
-(LINUX)
+1. Preparazione dell'Ambiente
+2. 
+Scarica la libreria pddl4j e spostala nella cartella lib:
 
 wget http://pddl4j.imag.fr/repository/pddl4j/binaries/pddl4j-4.0.0.jar
-
 mv pddl4j-4.0.0.jar lib/pddl4j-4.0.0.jar
 
+Apri un terminale nella cartella classical.
 
-Aprire un terminale nella cartella classical.
+2. Compilazione del Codice
 
-PER COMPILARE:
-
-javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/HeuristicEvaluation.java src/planning/Algoritmi.java
-
-PER ESEGUIRE:
-
-java -cp classes;lib\pddl4j-4.0.0.jar planning.Algoritmi <weight> <timeout> <path dominio> <path problema> <tipo ricerca> <euristica>
-
-REGOLE:
-
-- <weight> deve essere >= 0;
-- <timeout> (in minuti) deve essere > 0;
-- nel campo <tipo ricerca> sono ammessi i seguenti valori:
-        - WEIGHTED_ASTAR,
-        - ASTAR, (in questo caso qualsiasi sia il valore di weight viene ignorato)
-	- ENFORCED_HILL_CLIMBING
-   ognuno dei quali rappresenta una delle possibili tipologie di ricerca da usare.
-- nel campo <euristica> sono ammessi i seguenti valori:
-	- HEURISTIC_EVALUATION,
-        - AJUSTED_SUM,
-        - FAST_FORWARD;
-   ognuno dei quali rappresenta una delle possibili euristiche da usare.
-
-NB. Se si esegue in ambiente linux è opportuno modificare il formato dei path e nel comando d'esecuzione usare : e non ; dopo classes.
-
-Nel caso del problema i file pddl del dominio e delle istanze sono nella cartella pddl.
-
-Esempio di comandi:
-
-(per compilare)
+Per compilare il codice, esegui il seguente comando:
 
 javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/HeuristicEvaluation.java src/planning/Algoritmi.java
 
-(per ist1)
+3. Esecuzione del Programma
 
-**RICERCA**
+Per eseguire il programma, utilizza il comando seguente:
+
+bash
+
+java -cp classes:lib\pddl4j-4.0.0.jar planning.Algoritmi <weight> <timeout> <path_dominio> <path_problema> <tipo_ricerca> <euristica>
+
+4. Regole per l'Esecuzione
+
+    <weight> deve essere un valore maggiore o uguale a 0.
+    <timeout> deve essere un valore positivo (in minuti).
+    <tipo_ricerca> può essere uno dei seguenti:
+        WEIGHTED_ASTAR
+        ASTAR
+        ENFORCED_HILL_CLIMBING
+    <euristica> può essere uno dei seguenti:
+        HEURISTIC_EVALUATION
+        AJUSTED_SUM
+        FAST_FORWARD
+
+5. File PDDL
+
+I file PDDL per il dominio e le istanze del problema devono essere collocati nella cartella pddl.
+
+6. Esempi di Comandi
+
+Per compilare:
+
+javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/HeuristicEvaluation.java src/planning/Algoritmi.java
+
+Per eseguire (esempio per istanza 1):
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.5 10 pddl/domain.pddl pddl/ist1.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
-**RICERCA**
+Altri esempi di esecuzione:
 
 java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.3 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
 
-**RICERCA**
-
 java -cp classes:lib/pddl4j-4.0.0.jar planning.Algoritmi 1.5 10 pddl/domain.pddl pddl/ist2.pddl WEIGHTED_ASTAR PLANNING_HEURISTIC
+
+Segui questi passaggi per configurare correttamente l'ambiente e utilizzare il software in modo efficiente.
