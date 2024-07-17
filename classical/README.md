@@ -17,8 +17,6 @@ javac -d classes -cp lib/pddl4j-4.0.0.jar src/planning/HeuristicEvaluation.java 
 
 Per eseguire il programma, utilizza il comando seguente:
 
-bash
-
 java -cp classes:lib\pddl4j-4.0.0.jar planning.Algoritmi <weight> <timeout> <path_dominio> <path_problema> <tipo_ricerca> <euristica>
 
 4. Regole per l'Esecuzione
